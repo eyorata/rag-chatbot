@@ -19,12 +19,13 @@ def get_models():
     try:
         r = requests.get(f"{BACKEND_URL}/models", timeout=3)
         if r.ok:
-            return r.json().get("models", ["default"])
+            data = r.json()
+            return data.get("llm_models", ["default"]), data.get("embed_models", [])
     except:
         pass
-    return ["ollama-default"]
+    return ["ollama-default"], []
 
-available_models = get_models()
+available_llms, available_embeds = get_models()
 
 # Fetch active documents for this session
 def get_documents():
@@ -41,7 +42,8 @@ def get_documents():
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.subheader("⚙️ Settings")
-    selected_model = st.selectbox("LLM Model", options=available_models)
+    selected_model = st.selectbox("LLM Model", options=available_llms)
+    selected_embed = st.selectbox("Embedding Model (Info Only)", options=available_embeds, disabled=True)
     st.caption("Changes are advisory unless backend LLM_PROVIDER=ollama")
     st.text(f"Session: {st.session_state.session_id[:8]}...")
     
@@ -136,34 +138,61 @@ with tab_chat:
 
         with st.chat_message("assistant"):
             try:
-                # SSE Streaming client
-                response = requests.post(
-                    f"{BACKEND_URL}/chat/stream",
-                    json={"session_id": st.session_state.session_id, "query": prompt},
-                    stream=True,
-                    timeout=120
-                )
-                response.raise_for_status()
+                with st.spinner("Thinking... ⏳"):
+                    # SSE Streaming client
+                    response = requests.post(
+                        f"{BACKEND_URL}/chat/stream",
+                        json={"session_id": st.session_state.session_id, "query": prompt},
+                        stream=True,
+                        timeout=120
+                    )
+                    response.raise_for_status()
 
-                # Generate streaming text
+                    # Block the spinner until TTFT (Time To First Token) resolves
+                    lines_iter = response.iter_lines()
+                    try:
+                        first_line = next(lines_iter)
+                    except StopIteration:
+                        first_line = None
+
+                # Generate streaming text parsing reasoning tags
                 def generate():
-                    for line in response.iter_lines():
+                    in_think = False
+                    
+                    def process_line(line):
+                        nonlocal in_think
                         if line:
                             decoded_line = line.decode('utf-8')
                             if decoded_line.startswith("data: "):
                                 data_str = decoded_line[6:]
                                 try:
                                     data = json.loads(data_str)
-                                    # Yield text tokens directly
                                     if "content" in data:
-                                        yield data["content"]
+                                        content = data["content"]
+                                        if "<think>" in content:
+                                            in_think = True
+                                            content = content.replace("<think>", "💭 **Thinking...**\n\n_")
+                                        if "</think>" in content:
+                                            in_think = False
+                                            content = content.replace("</think>", "_\n\n")
+                                        return content
                                     if "error" in data:
-                                        yield f"\n\n**Error:** {data['error']}"
-                                    # Capture metadata (sources) silently at the end
+                                        return f"\n\n**Error:** {data['error']}"
                                     if "metadata" in data:
                                         st.session_state.last_metadata = data["metadata"]
-                                except Exception as e:
-                                    print(f"Error parse: {e}")
+                                except Exception:
+                                    pass
+                        return ""
+                    
+                    if first_line:
+                        chunk = process_line(first_line)
+                        if chunk:
+                            yield chunk
+                            
+                    for line in lines_iter:
+                        chunk = process_line(line)
+                        if chunk:
+                            yield chunk
 
                 # Render stream as it arrives
                 full_response = st.write_stream(generate())

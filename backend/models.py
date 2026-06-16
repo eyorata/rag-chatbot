@@ -40,4 +40,5 @@ class SearchResponse(BaseModel):
     chunks: List[SourceChunk]
     
 class ModelList(BaseModel):
-    models: List[str]
+    llm_models: List[str]
+    embed_models: List[str]

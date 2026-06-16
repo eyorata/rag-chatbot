@@ -94,17 +94,21 @@ async def health():
 async def list_models():
     """Fetch available models dynamically from Ollama."""
     if settings.llm_provider != "ollama":
-        return ModelList(models=[settings.llm_model])
+        return ModelList(llm_models=[settings.llm_model], embed_models=[settings.embedding_model])
     
     try:
         async with httpx.AsyncClient(timeout=5) as client:
             r = await client.get(f"{settings.ollama_base_url}/api/tags")
             r.raise_for_status()
-            models = [m["name"] for m in r.json().get("models", [])]
-            return ModelList(models=models)
+            
+            all_models = [m["name"] for m in r.json().get("models", [])]
+            embed_models = [m for m in all_models if "embed" in m.lower()]
+            llm_models = [m for m in all_models if "embed" not in m.lower()]
+            
+            return ModelList(llm_models=llm_models, embed_models=embed_models)
     except Exception as e:
         logger.warning(f"Could not fetch models from Ollama: {e}")
-        return ModelList(models=[settings.llm_model])
+        return ModelList(llm_models=[settings.llm_model], embed_models=[settings.embedding_model])
 
 
 @app.post("/upload", response_model=UploadResponse)
