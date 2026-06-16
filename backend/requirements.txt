@@ -6,3 +6,5 @@ httpx
 pypdf
 python-docx
 python-multipart
+# Added for SSE streaming support via httpx AsyncGenerator
+requests

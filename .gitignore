@@ -1,8 +1,28 @@
+# Environments
 .env
+
+# Python
 __pycache__/
 *.pyc
-.venv/
+*.pyo
+*.pyd
+.Python
+env/
 venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.venv
+.pytest_cache/
+
+# Streamlit
+.streamlit/
+
+# MacOS
+.DS_Store
+
+# Evaluation Results
 eval/results/*.json
+
+# Data
 sample_docs/*
 !sample_docs/.gitkeep
