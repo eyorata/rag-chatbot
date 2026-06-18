@@ -1,0 +1,165 @@
+🚀 Starting AI Evaluation Suite
+📄 Test Document: sample_docs/ai_evaluation_test_document.pdf
+📊 Dataset: eval/evaluation_dataset.json
+------------------------------------------------------------
+🧹 Clearing session 40826285-6569-470e-a35a-61c9d83e113d...
+📄 Uploading and Indexing...
+✅ Document indexed: 13 chunks.
+
+[Q01] What was the global investment in healthcare AI in 2023?
+  GT: Global investment in healthcare AI reached 45 billion USD in 2023, representing ...
+  A:  According to the **ai_evaluation_test_document.pdf** in the **1. Introduction** ...
+  Score: 0.47 | Latency: 14.54s
+
+[Q02] What are the three core domains of AI in healthcare covered in this report?
+  GT: The three core domains are: (1) diagnostic assistance, (2) administrative automa...
+  A:  According to **ai_evaluation_test_document.pdf** in the **1.1 Scope of This Repo...
+  Score: 0.36 | Latency: 2.42s
+
+[Q03] What accuracy rate did AI achieve in disease detection?
+  GT: Machine learning models demonstrated accuracy rates exceeding 94% in detecting d...
+  A:  According to **ai_evaluation_test_document.pdf** in the **1. Introduction** sect...
+  Score: 0.82 | Latency: 2.40s
+
+[Q04] What percentage of surveyed hospitals adopted AI diagnostic tools?
+  GT: 67% of the surveyed hospitals adopted AI diagnostic tools.
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section 2.1 Diagnostic...
+  Score: 0.86 | Latency: 1.84s
+
+[Q05] By how much did AI reduce radiologist workload?
+  GT: AI-assisted imaging analysis reduced radiologist workload by an average of 38%.
+  A:  Based on the information provided in **ai_evaluation_test_document.pdf** in the ...
+  Score: 0.78 | Latency: 2.34s
+
+[Q06] How much did AI reduce administrative costs in pilot programs?
+  GT: AI-based automation tools reduced administrative costs by an average of 22% in p...
+  A:  According to **ai_evaluation_test_document.pdf** in the **2.2 Administrative Aut...
+  Score: 0.91 | Latency: 8.34s
+
+[Q07] What was the NLP accuracy rate in data extraction tasks?
+  GT: Natural Language Processing (NLP) systems achieved a 97% accuracy rate in data e...
+  A:  According to **ai_evaluation_test_document.pdf** in the **2.2 Administrative Aut...
+  Score: 0.83 | Latency: 5.06s
+
+[Q08] What improvement in 5-year survival rates was seen in AI-assisted cancer treatment?
+  GT: Patients receiving AI-assisted treatment recommendations showed a 28% improvemen...
+  A:  According to **ai_evaluation_test_document.pdf** in the **2.3 Personalized Treat...
+  Score: 0.88 | Latency: 2.95s
+
+[Q09] What percentage of respondents cited data privacy as a challenge?
+  GT: Data privacy was mentioned by 78% of respondents as the most frequently cited ch...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section 3.1 Data Priva...
+  Score: 0.82 | Latency: 1.90s
+
+[Q10] What is the average cost of EHR-AI integration per facility?
+  GT: The average cost of EHR-AI integration was estimated at 1.2 million USD per faci...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section 3.2 Integratio...
+  Score: 0.80 | Latency: 2.90s
+
+[Q11] What percentage of physicians trusted AI diagnostic recommendations without human verification?
+  GT: Only 41% of physicians surveyed expressed confidence in AI diagnostic recommenda...
+  A:  According to **ai_evaluation_test_document.pdf** in the **3.3 Clinician Acceptan...
+  Score: 0.92 | Latency: 5.90s
+
+[Q12] What is the average upfront investment for a comprehensive AI system in healthcare?
+  GT: The average upfront investment for a comprehensive AI system was reported at 3.7...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section: 3.4 Cost of I...
+  Score: 0.94 | Latency: 2.79s
+
+[Q13] How did AI affect the time to diagnosis in hospitals that adopted it?
+  GT: The average time to diagnosis decreased from 4.2 days to 1.8 days in facilities ...
+  A:  According to **ai_evaluation_test_document.pdf** in the **2.1 Diagnostic Assista...
+  Score: 0.83 | Latency: 6.01s
+
+[Q14] What regulations were mentioned as creating data privacy challenges for AI in healthcare?
+  GT: HIPAA in the United States and GDPR in Europe were mentioned as regulations that...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section 3.1 Data Priva...
+  Score: 0.90 | Latency: 3.48s
+
+[Q15] What is the 'black box' problem mentioned in the report?
+  GT: The 'black box' problem refers to the lack of explainability in AI decisions, wh...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section 3.3 Clinician ...
+  Score: 0.50 | Latency: 3.18s
+
+[Q16] What percentage of rural hospitals had budget for AI adoption in the next 3 years?
+  GT: Only 29% of rural hospitals indicated they had sufficient budget to consider AI ...
+  A:  According to **ai_evaluation_test_document.pdf** in **Section 3.4 Cost of Implem...
+  Score: 0.88 | Latency: 2.10s
+
+[Q17] What interoperability standard does the report recommend for EHR integration?
+  GT: The report recommends HL7 FHIR as an interoperability standard to ensure new AI ...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section: 4. Recommenda...
+  Score: 0.88 | Latency: 3.42s
+
+[Q18] How much can AI literacy programs increase physician trust in AI tools?
+  GT: AI literacy programs have been shown to increase physician trust in AI tools by ...
+  A:  According to **ai_evaluation_test_document.pdf** in the **Section: 4. Recommenda...
+  Score: 0.87 | Latency: 2.53s
+
+[Q19] Summarize the key findings of the report across all three domains.
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 537, in _make_request
+    response = conn.getresponse()
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 461, in getresponse
+    httplib_response = super().getresponse()
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 1448, in getresponse
+    response.begin()
+  File "/usr/lib/python3.12/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/http/client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 707, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 486, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 845, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 472, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/urllib3/util/util.py", line 39, in reraise
+    raise value
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 791, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 539, in _make_request
+    self._raise_timeout(err=e, url=url, timeout_value=read_timeout)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 371, in _raise_timeout
+    raise ReadTimeoutError(
+urllib3.exceptions.ReadTimeoutError: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/eyorata/rag-chatbot/eval/run_eval.py", line 115, in <module>
+    run_evaluation()
+  File "/home/eyorata/rag-chatbot/eval/run_eval.py", line 57, in run_evaluation
+    chat_response = requests.post(
+                    ^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 115, in post
+    return request("post", url, data=data, json=json, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 59, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 532, in send
+    raise ReadTimeout(e, request=request)
+requests.exceptions.ReadTimeout: HTTPConnectionPool(host='localhost', port=8000): Read timed out. (read timeout=60)

@@ -1,0 +1,452 @@
+{
+  "timestamp": "2026-06-18T10:49:51.345615",
+  "test_file": "../sample_docs/ai_evaluation_test_document.pdf",
+  "chunks_indexed": 13,
+  "total_questions": 25,
+  "overall_metrics": {
+    "accuracy": 0.0,
+    "recall": 0.0,
+    "faithfulness": 0.0,
+    "completeness": 0.0,
+    "avg_latency": 8.97,
+    "min_latency": 2.36,
+    "max_latency": 46.7
+  },
+  "by_difficulty": {
+    "easy": {
+      "count": 12,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 6.53
+    },
+    "medium": {
+      "count": 7,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 8.5
+    },
+    "hard": {
+      "count": 6,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 14.4
+    }
+  },
+  "by_type": {
+    "factual": {
+      "count": 18,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 7.31
+    },
+    "conceptual": {
+      "count": 1,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 6.33
+    },
+    "summarization": {
+      "count": 3,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 9.99
+    },
+    "multi_hop": {
+      "count": 1,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 46.7
+    },
+    "out_of_context": {
+      "count": 2,
+      "accuracy": 0.0,
+      "recall": 0.0,
+      "faithfulness": 0.0,
+      "avg_latency": 4.86
+    }
+  },
+  "details": [
+    {
+      "id": "Q01",
+      "question": "What was the global investment in healthcare AI in 2023?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **1. Introduction** section, global investment in healthcare AI reached **45 billion USD** in 2023.",
+      "ground_truth": "Global investment in healthcare AI reached 45 billion USD in 2023, representing a 32% increase compared to the previous year.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 30.233176469802856
+      }
+    },
+    {
+      "id": "Q02",
+      "question": "What are the three core domains of AI in healthcare covered in this report?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **1.1 Scope of This Report** section, this report focuses on the following three core domains of AI in healthcare:\n\n1.  Diagnostic assistance\n2.  ",
+      "ground_truth": "The three core domains are: (1) diagnostic assistance, (2) administrative automation, and (3) personalized treatment planning.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 6.606294870376587
+      }
+    },
+    {
+      "id": "Q03",
+      "question": "What accuracy rate did AI achieve in disease detection?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **1. Introduction** section, machine learning models trained on large clinical datasets have demonstrated the ability to detect diseases (includin",
+      "ground_truth": "Machine learning models demonstrated accuracy rates exceeding 94% in detecting diseases such as cancer, diabetic retinopathy, and cardiovascular disorders.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.070075273513794
+      }
+    },
+    {
+      "id": "Q04",
+      "question": "What percentage of surveyed hospitals adopted AI diagnostic tools?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **2.1 Diagnostic Assistance** section, **67% of the surveyed hospitals** adopted AI diagnostic tools.",
+      "ground_truth": "67% of the surveyed hospitals adopted AI diagnostic tools.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 2.3560593128204346
+      }
+    },
+    {
+      "id": "Q05",
+      "question": "By how much did AI reduce radiologist workload?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **2.1 Diagnostic Assistance** section, **AI-assisted imaging analysis** reduced radiologist workload by an **average of 38%**.",
+      "ground_truth": "AI-assisted imaging analysis reduced radiologist workload by an average of 38%.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 2.5568814277648926
+      }
+    },
+    {
+      "id": "Q06",
+      "question": "How much did AI reduce administrative costs in pilot programs?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **2.2 Administrative Automation** section, AI-based automation tools reduced administrative costs by an **average of 22% in pilot programs**.\n\nAdm",
+      "ground_truth": "AI-based automation tools reduced administrative costs by an average of 22% in pilot programs.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.692699670791626
+      }
+    },
+    {
+      "id": "Q07",
+      "question": "What was the NLP accuracy rate in data extraction tasks?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **2.2 Administrative Automation** section, Natural Language Processing (NLP) systems used to digitize and classify paper-based records achieved a ",
+      "ground_truth": "Natural Language Processing (NLP) systems achieved a 97% accuracy rate in data extraction tasks.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.2150604724884033
+      }
+    },
+    {
+      "id": "Q08",
+      "question": "What improvement in 5-year survival rates was seen in AI-assisted cancer treatment?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **2.3 Personalized Treatment Planning** section, patients receiving AI-assisted treatment recommendations showed a **28% improvement** in 5-year s",
+      "ground_truth": "Patients receiving AI-assisted treatment recommendations showed a 28% improvement in 5-year survival rates compared to those receiving standard care protocols.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 12.047962665557861
+      }
+    },
+    {
+      "id": "Q09",
+      "question": "What percentage of respondents cited data privacy as a challenge?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.1 Data Privacy and Security** section, **78% of respondents** cited data privacy as a challenge to AI adoption in healthcare.\n\nThis section no",
+      "ground_truth": "Data privacy was mentioned by 78% of respondents as the most frequently cited challenge.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.6761703491210938
+      }
+    },
+    {
+      "id": "Q10",
+      "question": "What is the average cost of EHR-AI integration per facility?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.2 Integration with Legacy Systems** section, the **average cost of EHR-AI integration was estimated at 1.2 million USD per facility**.\n\nThis s",
+      "ground_truth": "The average cost of EHR-AI integration was estimated at 1.2 million USD per facility.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.478931188583374
+      }
+    },
+    {
+      "id": "Q11",
+      "question": "What percentage of physicians trusted AI diagnostic recommendations without human verification?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.3 Clinician Acceptance and Trust** section:\n\n**41%** of physicians surveyed expressed confidence in AI diagnostic recommendations without huma",
+      "ground_truth": "Only 41% of physicians surveyed expressed confidence in AI diagnostic recommendations without human verification.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.192173719406128
+      }
+    },
+    {
+      "id": "Q12",
+      "question": "What is the average upfront investment for a comprehensive AI system in healthcare?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.4 Cost of Implementation** section, the average upfront investment for a comprehensive AI system in healthcare was reported at **3.7 million U",
+      "ground_truth": "The average upfront investment for a comprehensive AI system was reported at 3.7 million USD, with ongoing annual maintenance costs of approximately 480,000 USD.",
+      "difficulty": "easy",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 4.176871299743652
+      }
+    },
+    {
+      "id": "Q13",
+      "question": "How did AI affect the time to diagnosis in hospitals that adopted it?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **2.1 Diagnostic Assistance** section, in facilities that adopted AI tools:\n\nThe **average time to diagnosis decreased from 4.2 days to 1.8 days**",
+      "ground_truth": "The average time to diagnosis decreased from 4.2 days to 1.8 days in facilities using AI tools.",
+      "difficulty": "medium",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.152684211730957
+      }
+    },
+    {
+      "id": "Q14",
+      "question": "What regulations were mentioned as creating data privacy challenges for AI in healthcare?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.1 Data Privacy and Security** section, the following regulations were mentioned as creating data privacy challenges for AI in healthcare:\n\n1. ",
+      "ground_truth": "HIPAA in the United States and GDPR in Europe were mentioned as regulations that impose strict requirements on how patient data can be used for AI training.",
+      "difficulty": "medium",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 33.97124934196472
+      }
+    },
+    {
+      "id": "Q15",
+      "question": "What is the 'black box' problem mentioned in the report?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.3 Clinician Acceptance and Trust** section, the **'black box' problem** refers to the **lack of explainability in AI decisions**.\n\nThis issue ",
+      "ground_truth": "The 'black box' problem refers to the lack of explainability in AI decisions, where clinicians cannot understand the reasoning behind AI recommendations, raising concerns about trust and liability.",
+      "difficulty": "medium",
+      "question_type": "conceptual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 6.325466871261597
+      }
+    },
+    {
+      "id": "Q16",
+      "question": "What percentage of rural hospitals had budget for AI adoption in the next 3 years?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **3.4 Cost of Implementation** section, only **29%** of rural hospitals indicated they had sufficient budget to consider AI adoption within the ne",
+      "ground_truth": "Only 29% of rural hospitals indicated they had sufficient budget to consider AI adoption within the next 3 years.",
+      "difficulty": "medium",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 5.69790506362915
+      }
+    },
+    {
+      "id": "Q17",
+      "question": "What interoperability standard does the report recommend for EHR integration?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **4. Recommendations** section, the report recommends prioritizing **HL7 FHIR** (Fast Healthcare Interoperability Resources) as an interoperabilit",
+      "ground_truth": "The report recommends HL7 FHIR as an interoperability standard to ensure new AI systems can connect seamlessly with existing EHR platforms.",
+      "difficulty": "medium",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.9942803382873535
+      }
+    },
+    {
+      "id": "Q18",
+      "question": "How much can AI literacy programs increase physician trust in AI tools?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **4. Recommendations** section, AI literacy programs have been shown to **increase physician trust in AI tools by up to 55%** in pilot studies.\n\nT",
+      "ground_truth": "AI literacy programs have been shown to increase physician trust in AI tools by up to 55% in pilot studies.",
+      "difficulty": "medium",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.311880350112915
+      }
+    },
+    {
+      "id": "Q19",
+      "question": "Summarize the key findings of the report across all three domains.",
+      "answer": "Based on the `ai_evaluation_test_document.pdf`, here is a summary of key findings across all three core domains of AI in healthcare:\n\n## 1. Diagnostic Assistance\n- **Adoption Rate:** AI diagnostic too",
+      "ground_truth": "The report found that 67% of hospitals adopted AI diagnostic tools with 89% reporting improved early detection and 38% reduction in radiologist workload. Administrative automation reduced costs by 22% with NLP achieving 97% accuracy. In personalized treatment, AI-assisted plans improved 5-year cancer survival rates by 28%.",
+      "difficulty": "hard",
+      "question_type": "summarization",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 13.5208261013031
+      }
+    },
+    {
+      "id": "Q20",
+      "question": "What are the main challenges to AI adoption in healthcare?",
+      "answer": "Based on `ai_evaluation_test_document.pdf` in **Section 3. Challenges and Barriers**, the main challenges to AI adoption in healthcare include:\n\n## 1. Data Privacy and Security (Section 3.1)\n- **Data ",
+      "ground_truth": "The four main challenges are: (1) data privacy and security concerns due to HIPAA/GDPR regulations, (2) integration difficulties with legacy EHR systems costing 1.2M USD per facility, (3) clinician skepticism and lack of trust in AI decisions, and (4) high implementation costs averaging 3.7M USD upfront.",
+      "difficulty": "hard",
+      "question_type": "summarization",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 8.66295075416565
+      }
+    },
+    {
+      "id": "Q21",
+      "question": "What does the report recommend for improving AI adoption in healthcare?",
+      "answer": "Based on `ai_evaluation_test_document.pdf` in the **4. Recommendations** section, the report offers the following recommendations for healthcare organizations and policymakers to advance responsible A",
+      "ground_truth": "The report recommends five actions: establishing federated learning frameworks for data privacy, investing in staff training and AI literacy programs, prioritizing HL7 FHIR interoperability standards, creating tiered funding for smaller hospitals, and developing explainable AI (XAI) requirements in regulatory approval.",
+      "difficulty": "hard",
+      "question_type": "summarization",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 7.784998655319214
+      }
+    },
+    {
+      "id": "Q22",
+      "question": "How does AI adoption differ between large hospitals and rural facilities?",
+      "answer": "According to the provided context from `ai_evaluation_test_document.pdf`, there is no explicit statistical comparison of AI adoption rates specifically between large hospitals and rural facilities, bu",
+      "ground_truth": "Large hospitals have higher AI adoption rates, while only 29% of rural hospitals had sufficient budget for AI adoption within the next 3 years. The report recommends tiered funding programs with grants and subsidies specifically for smaller and rural facilities.",
+      "difficulty": "hard",
+      "question_type": "multi_hop",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 46.69517707824707
+      }
+    },
+    {
+      "id": "Q23",
+      "question": "What is the potential annual cost saving from AI in global healthcare by 2030?",
+      "answer": "According to `ai_evaluation_test_document.pdf` in the **5. Conclusion** section, AI has the potential to **reduce global healthcare costs by an estimated 150 billion USD annually by 2030**.\n\nThis esti",
+      "ground_truth": "AI has the potential to reduce global healthcare costs by an estimated 150 billion USD annually by 2030.",
+      "difficulty": "medium",
+      "question_type": "factual",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 3.0710806846618652
+      }
+    },
+    {
+      "id": "Q24",
+      "question": "Which specific AI companies are mentioned in the report?",
+      "answer": "According to the provided context from `ai_evaluation_test_document.pdf`, **no specific AI companies are mentioned** in the report.\n\nThe document focuses on:\n- Three core domains of AI in healthcare (",
+      "ground_truth": "The document does not mention any specific AI companies by name.",
+      "difficulty": "hard",
+      "question_type": "out_of_context",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 4.808419704437256
+      }
+    },
+    {
+      "id": "Q25",
+      "question": "What is the author's name of this report?",
+      "answer": "Based on the provided context from `ai_evaluation_test_document.pdf`, **no information about the author's name** is included in any of the sections reviewed.\n\nThe available sections cover:\n- **1.1 Sco",
+      "ground_truth": "The document does not mention any author name.",
+      "difficulty": "hard",
+      "question_type": "out_of_context",
+      "metrics": {
+        "accuracy": 0,
+        "recall": 0,
+        "faithfulness": 0,
+        "completeness": 0,
+        "latency": 4.918925762176514
+      }
+    }
+  ]
+}
