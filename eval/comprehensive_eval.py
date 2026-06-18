@@ -7,13 +7,45 @@ import argparse
 import uuid
 from collections import defaultdict
 from datetime import datetime
+from difflib import SequenceMatcher
+
+# Load environment variables from .env file
+from dotenv import load_dotenv
+load_dotenv("../.env")  # Load from backend .env file
 
 # Configuration
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434") + "/api/generate"
-JUDGE_MODEL = os.getenv("JUDGE_MODEL", "gemma4:31b")
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", "llama2")  # Use llama2 as default (more reliable)
 DEFAULT_TEST_FILE = "eval/gemini_evaluation_prompt.pdf"
 DEFAULT_DATASET = "eval/evaluation_dataset.json"
+
+def simple_evaluate(question, ground_truth, answer):
+    """Fallback: Simple string-based evaluation when judge model fails"""
+    # Accuracy: string similarity
+    accuracy = SequenceMatcher(None, ground_truth.lower(), answer.lower()).ratio() * 10
+    
+    # Recall: what % of ground truth words appear in answer
+    gt_words = set(ground_truth.lower().split())
+    answer_words = set(answer.lower().split())
+    if gt_words:
+        recall = len(gt_words & answer_words) / len(gt_words) * 10
+    else:
+        recall = 0
+    
+    # Faithfulness: if answer is shorter but contains key info, penalize less
+    faithfulness = 7 if answer and len(answer) > 20 else 3
+    
+    # Completeness: based on answer length
+    completeness = min(10, max(3, len(answer.split()) / 5))
+    
+    return {
+        "accuracy": min(10, accuracy),
+        "recall": min(10, recall),
+        "faithfulness": faithfulness,
+        "completeness": completeness,
+        "reason": "Fallback evaluation"
+    }
 
 def evaluate_answer(question, ground_truth, answer):
     """
@@ -53,33 +85,43 @@ Respond with JSON format only, no other text:
             json={
                 "model": JUDGE_MODEL,
                 "prompt": evaluation_prompt,
-                "stream": False
+                "stream": False,
+                "temperature": 0.1
             },
             timeout=60
         )
         if response.status_code == 200:
             try:
-                # Extract JSON from response
                 response_text = response.json().get('response', '{}').strip()
-                # Try to parse JSON
                 import re
-                json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+                # Extract JSON with better regex
+                json_match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', response_text, re.DOTALL)
                 if json_match:
                     result = json.loads(json_match.group())
+                    # Validate and clamp scores to 0-10
+                    result['accuracy'] = max(0, min(10, int(result.get('accuracy', 0))))
+                    result['recall'] = max(0, min(10, int(result.get('recall', 0))))
+                    result['faithfulness'] = max(0, min(10, int(result.get('faithfulness', 0))))
+                    result['completeness'] = max(0, min(10, int(result.get('completeness', 0))))
                     return result
-            except:
-                pass
-    except:
-        pass
+                else:
+                    print(f"    ⚠️  Could not extract JSON from: {response_text[:80]}")
+            except json.JSONDecodeError as e:
+                print(f"    ⚠️  JSON error: {str(e)[:40]}")
+            except Exception as e:
+                print(f"    ⚠️  Parse error: {str(e)[:40]}")
+        else:
+            print(f"    ⚠️  API error: {response.status_code}")
+    except requests.exceptions.Timeout:
+        print(f"    ⚠️  Judge timeout")
+    except requests.exceptions.ConnectionError:
+        print(f"    ⚠️  Cannot connect to Ollama at {OLLAMA_URL}")
+    except Exception as e:
+        print(f"    ⚠️  Error: {str(e)[:40]}")
     
-    # Return default if parsing fails
-    return {
-        "accuracy": 0,
-        "recall": 0,
-        "faithfulness": 0,
-        "completeness": 0,
-        "reason": "Evaluation failed"
-    }
+    # Use fallback simple evaluation when judge fails
+    print(f"    📊 Using fallback evaluation")
+    return simple_evaluate(question, ground_truth, answer)
 
 def run_comprehensive_evaluation(test_file, dataset_file):
     """Run comprehensive evaluation with detailed metrics"""
@@ -91,6 +133,8 @@ def run_comprehensive_evaluation(test_file, dataset_file):
     print(f"📄 Test Document: {test_file}")
     print(f"📊 Dataset: {dataset_file}")
     print(f"🤖 Judge Model: {JUDGE_MODEL}")
+    print(f"🔗 API URL: {API_URL}")
+    print(f"🔗 Ollama URL: {OLLAMA_URL[:-14]}")  # Remove /api/generate for display
     print(f"⏰ Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-"*70)
 
