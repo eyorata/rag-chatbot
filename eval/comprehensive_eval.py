@@ -70,7 +70,7 @@ Rate on these dimensions (0-10 each):
 3. FAITHFULNESS: How faithful is the answer to the source (no hallucinations)?
 4. COMPLETENESS: How complete is the answer (not too brief)?
 
-Respond with JSON format only, no other text:
+Respond ONLY with JSON format, no other text:
 {{
     "accuracy": <0-10>,
     "recall": <0-10>,
@@ -105,16 +105,16 @@ Respond with JSON format only, no other text:
                     result['completeness'] = max(0, min(10, int(result.get('completeness', 0))))
                     return result
                 else:
-                    print(f"    ⚠️  Could not extract JSON from: {response_text[:80]}")
+                    print(f"    ⚠️  Could not extract JSON: {response_text[:60]}")
             except json.JSONDecodeError as e:
                 print(f"    ⚠️  JSON error: {str(e)[:40]}")
             except Exception as e:
                 print(f"    ⚠️  Parse error: {str(e)[:40]}")
         else:
-            print(f"    ⚠️  API error: {response.status_code}")
+            print(f"    ⚠️  Ollama error {response.status_code}: {JUDGE_MODEL} at {OLLAMA_URL}")
     except requests.exceptions.Timeout:
         print(f"    ⚠️  Judge timeout")
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError as e:
         print(f"    ⚠️  Cannot connect to Ollama at {OLLAMA_URL}")
     except Exception as e:
         print(f"    ⚠️  Error: {str(e)[:40]}")
@@ -137,14 +137,48 @@ def run_comprehensive_evaluation(test_file, dataset_file):
     print(f"🔗 Ollama URL: {OLLAMA_URL[:-14]}")  # Remove /api/generate for display
     print(f"⏰ Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-"*70)
-
+    
+    # Test Ollama connection
+    print("\n✅ Testing Ollama connection...")
+    try:
+        test_response = requests.post(
+            OLLAMA_URL,
+            json={"model": JUDGE_MODEL, "prompt": "test", "stream": False},
+            timeout=5
+        )
+        if test_response.status_code == 200:
+            print(f"✅ Ollama connected! Model '{JUDGE_MODEL}' is available")
+        else:
+            print(f"⚠️  Ollama returned {test_response.status_code}")
+            print(f"   Model '{JUDGE_MODEL}' may not exist. Available models: {JUDGE_MODEL}")
+            print(f"   Response: {test_response.text[:100]}")
+    except Exception as e:
+        print(f"⚠️  Cannot connect to Ollama at {OLLAMA_URL}")
+        print(f"   Error: {str(e)}")
+        print(f"   Check: 1) OLLAMA_BASE_URL in .env")
+        print(f"          2) Ollama server is running")
+        print(f"          3) Model '{JUDGE_MODEL}' is installed")
+    print("-"*70)
+    
+    # Test Backend connection
+    print("\n✅ Testing Backend connection...")
+    try:
+        test_response = requests.get(f"{API_URL}/models", timeout=5)
+        if test_response.status_code == 200:
+            print(f"✅ Backend connected at {API_URL}")
+        else:
+            print(f"⚠️  Backend returned {test_response.status_code}")
+    except Exception as e:
+        print(f"❌ Cannot connect to Backend at {API_URL}")
+        print(f"   Make sure the backend is running: cd backend && uvicorn main:app --reload --port 8000")
+        sys.exit(1)
+    print("-"*70)
+    
     # 1. Clear session
     try:
         requests.delete(f"{API_URL}/session/{session_id}")
     except:
-        print(f"❌ ERROR: Cannot connect to API at {API_URL}")
-        print("   Make sure the backend is running: uvicorn main:app --reload --port 8000")
-        sys.exit(1)
+        pass  # Session might not exist yet
 
     # 2. Upload test document
     print(f"\n📤 Uploading document...")
