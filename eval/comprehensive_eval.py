@@ -16,7 +16,7 @@ load_dotenv("../.env")  # Load from backend .env file
 # Configuration
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434") + "/api/generate"
-JUDGE_MODEL = os.getenv("JUDGE_MODEL", "llama2")  # Use llama2 as default (more reliable)
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", "qwen3.5:latest")  # Default to qwen3.5 (fast & reliable)
 DEFAULT_TEST_FILE = "eval/gemini_evaluation_prompt.pdf"
 DEFAULT_DATASET = "eval/evaluation_dataset.json"
 

@@ -10,7 +10,7 @@ import uuid
 # Configuration
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 OLLAMA_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434") + "/api/generate"
-JUDGE_MODEL = os.getenv("JUDGE_MODEL", "gemma4:31b")
+JUDGE_MODEL = os.getenv("JUDGE_MODEL", "qwen3.5:latest")
 DEFAULT_TEST_FILE = "eval/gemini_evaluation_prompt.pdf"
 DEFAULT_DATASET = "eval/evaluation_dataset.json"
 
