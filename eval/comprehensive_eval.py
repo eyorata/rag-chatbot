@@ -118,7 +118,7 @@ def run_comprehensive_evaluation(test_file, dataset_file):
     print(f"📊 Dataset: {dataset_file}")
     print(f"🤖 Judge Model: {JUDGE_MODEL}")
     print(f"🔗 API URL: {API_URL}")
-    print(f"🔗 Ollama URL: {OLLAMA_URL[:-14]}")  # Remove /api/generate for display
+    print(f"🔗 Ollama URL: {OLLAMA_URL.replace('/api/generate', '')}")  # Remove /api/generate for display
     print(f"⏰ Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-"*70)
     
