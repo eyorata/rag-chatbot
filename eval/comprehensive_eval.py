@@ -49,9 +49,62 @@ def simple_evaluate(question, ground_truth, answer):
 
 def evaluate_answer(question, ground_truth, answer):
     """
-    Evaluate answer using fallback simple evaluation.
-    Returns: accuracy, recall, faithfulness, precision scores (0-10 scale)
+    Comprehensive evaluation using LLM as judge.
+    Returns: accuracy, recall, faithfulness, completeness scores (0-10 scale)
     """
+    # Create a simple scoring prompt
+    prompt = f"""Score this answer on these dimensions (respond with 4 numbers 0-10, comma-separated):
+
+Question: {question}
+
+Ground Truth: {ground_truth}
+
+Answer: {answer}
+
+Format: accuracy,recall,faithfulness,completeness
+Example: 7,8,9,6"""
+    
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json={
+                "model": JUDGE_MODEL,
+                "prompt": prompt,
+                "stream": False
+            },
+            timeout=120
+        )
+        
+        if response.status_code == 200:
+            response_text = response.json().get('response', '').strip()
+            
+            # Try to extract numbers
+            import re
+            numbers = re.findall(r'\d+(?:\.\d+)?', response_text)
+            
+            if len(numbers) >= 4:
+                try:
+                    scores = [float(n) for n in numbers[:4]]
+                    return {
+                        "accuracy": max(0, min(10, int(scores[0]))),
+                        "recall": max(0, min(10, int(scores[1]))),
+                        "faithfulness": max(0, min(10, int(scores[2]))),
+                        "completeness": max(0, min(10, int(scores[3]))),
+                        "reason": "Judge model"
+                    }
+                except:
+                    pass
+        else:
+            print(f"    ⚠️  Ollama error {response.status_code}")
+            
+    except requests.exceptions.Timeout:
+        print(f"    ⚠️  Timeout - judge model took too long")
+    except requests.exceptions.ConnectionError:
+        print(f"    ⚠️  Connection error to Ollama")
+    except Exception as e:
+        print(f"    ⚠️  Error: {str(e)[:50]}")
+    
+    # Fallback to simple evaluation
     return simple_evaluate(question, ground_truth, answer)
 
 def run_comprehensive_evaluation(test_file, dataset_file):
@@ -69,24 +122,26 @@ def run_comprehensive_evaluation(test_file, dataset_file):
     print(f"⏰ Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-"*70)
     
-    # Test Ollama connection (non-blocking)
-    print("\n✅ Testing Ollama connection...")
-    use_judge = False
+    # Quick Ollama connection check (non-blocking, 2 second timeout)
+    ollama_ready = False
     try:
-        test_response = requests.post(
-            OLLAMA_URL,
-            json={"model": JUDGE_MODEL, "prompt": "test", "stream": False},
-            timeout=3
+        test_response = requests.get(
+            OLLAMA_URL.replace("/api/generate", "/api/tags"),
+            timeout=2
         )
         if test_response.status_code == 200:
-            print(f"✅ Ollama connected! Using judge model: {JUDGE_MODEL}")
-            use_judge = True
+            models = test_response.json().get('models', [])
+            model_names = [m.get('name', '') for m in models]
+            if any(JUDGE_MODEL in m for m in model_names):
+                print(f"✅ Ollama ready with {JUDGE_MODEL}")
+                ollama_ready = True
+            else:
+                print(f"⚠️  {JUDGE_MODEL} not found. Available: {model_names[:3]}")
         else:
-            print(f"⚠️  Ollama returned {test_response.status_code}")
-            print(f"   Falling back to simple evaluation")
+            print(f"⚠️  Ollama check failed: {test_response.status_code}")
     except:
-        print(f"⚠️  Could not reach Ollama, using fallback evaluation")
-        print(f"   (Models will still be evaluated using string similarity)")
+        print(f"⚠️  Ollama not responding - using fallback evaluation")
+    
     print("-"*70)
     
     # 1. Clear session
