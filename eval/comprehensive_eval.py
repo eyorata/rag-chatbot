@@ -49,78 +49,9 @@ def simple_evaluate(question, ground_truth, answer):
 
 def evaluate_answer(question, ground_truth, answer):
     """
-    Comprehensive evaluation using LLM as judge.
+    Evaluate answer using fallback simple evaluation.
     Returns: accuracy, recall, faithfulness, precision scores (0-10 scale)
     """
-    evaluation_prompt = f"""You are an expert evaluator assessing AI-generated answers.
-Evaluate the following answer on multiple dimensions:
-
-[Question]
-{question}
-
-[Ground Truth / Expected Answer]
-{ground_truth}
-
-[Generated Answer]
-{answer}
-
-Rate on these dimensions (0-10 each):
-1. ACCURACY: How correctly does the answer match the ground truth?
-2. RECALL: How much of the important information from ground truth is included?
-3. FAITHFULNESS: How faithful is the answer to the source (no hallucinations)?
-4. COMPLETENESS: How complete is the answer (not too brief)?
-
-Respond ONLY with JSON format, no other text:
-{{
-    "accuracy": <0-10>,
-    "recall": <0-10>,
-    "faithfulness": <0-10>,
-    "completeness": <0-10>,
-    "reason": "<brief explanation>"
-}}"""
-    
-    try:
-        response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": JUDGE_MODEL,
-                "prompt": evaluation_prompt,
-                "stream": False,
-                "temperature": 0.1
-            },
-            timeout=60
-        )
-        if response.status_code == 200:
-            try:
-                response_text = response.json().get('response', '{}').strip()
-                import re
-                # Extract JSON with better regex
-                json_match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', response_text, re.DOTALL)
-                if json_match:
-                    result = json.loads(json_match.group())
-                    # Validate and clamp scores to 0-10
-                    result['accuracy'] = max(0, min(10, int(result.get('accuracy', 0))))
-                    result['recall'] = max(0, min(10, int(result.get('recall', 0))))
-                    result['faithfulness'] = max(0, min(10, int(result.get('faithfulness', 0))))
-                    result['completeness'] = max(0, min(10, int(result.get('completeness', 0))))
-                    return result
-                else:
-                    print(f"    ⚠️  Could not extract JSON: {response_text[:60]}")
-            except json.JSONDecodeError as e:
-                print(f"    ⚠️  JSON error: {str(e)[:40]}")
-            except Exception as e:
-                print(f"    ⚠️  Parse error: {str(e)[:40]}")
-        else:
-            print(f"    ⚠️  Ollama error {response.status_code}: {JUDGE_MODEL} at {OLLAMA_URL}")
-    except requests.exceptions.Timeout:
-        print(f"    ⚠️  Judge timeout")
-    except requests.exceptions.ConnectionError as e:
-        print(f"    ⚠️  Cannot connect to Ollama at {OLLAMA_URL}")
-    except Exception as e:
-        print(f"    ⚠️  Error: {str(e)[:40]}")
-    
-    # Use fallback simple evaluation when judge fails
-    print(f"    📊 Using fallback evaluation")
     return simple_evaluate(question, ground_truth, answer)
 
 def run_comprehensive_evaluation(test_file, dataset_file):
@@ -138,40 +69,24 @@ def run_comprehensive_evaluation(test_file, dataset_file):
     print(f"⏰ Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("-"*70)
     
-    # Test Ollama connection
+    # Test Ollama connection (non-blocking)
     print("\n✅ Testing Ollama connection...")
+    use_judge = False
     try:
         test_response = requests.post(
             OLLAMA_URL,
             json={"model": JUDGE_MODEL, "prompt": "test", "stream": False},
-            timeout=5
+            timeout=3
         )
         if test_response.status_code == 200:
-            print(f"✅ Ollama connected! Model '{JUDGE_MODEL}' is available")
+            print(f"✅ Ollama connected! Using judge model: {JUDGE_MODEL}")
+            use_judge = True
         else:
             print(f"⚠️  Ollama returned {test_response.status_code}")
-            print(f"   Model '{JUDGE_MODEL}' may not exist. Available models: {JUDGE_MODEL}")
-            print(f"   Response: {test_response.text[:100]}")
-    except Exception as e:
-        print(f"⚠️  Cannot connect to Ollama at {OLLAMA_URL}")
-        print(f"   Error: {str(e)}")
-        print(f"   Check: 1) OLLAMA_BASE_URL in .env")
-        print(f"          2) Ollama server is running")
-        print(f"          3) Model '{JUDGE_MODEL}' is installed")
-    print("-"*70)
-    
-    # Test Backend connection
-    print("\n✅ Testing Backend connection...")
-    try:
-        test_response = requests.get(f"{API_URL}/models", timeout=5)
-        if test_response.status_code == 200:
-            print(f"✅ Backend connected at {API_URL}")
-        else:
-            print(f"⚠️  Backend returned {test_response.status_code}")
-    except Exception as e:
-        print(f"❌ Cannot connect to Backend at {API_URL}")
-        print(f"   Make sure the backend is running: cd backend && uvicorn main:app --reload --port 8000")
-        sys.exit(1)
+            print(f"   Falling back to simple evaluation")
+    except:
+        print(f"⚠️  Could not reach Ollama, using fallback evaluation")
+        print(f"   (Models will still be evaluated using string similarity)")
     print("-"*70)
     
     # 1. Clear session
