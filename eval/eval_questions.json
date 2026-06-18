@@ -1,10 +1,22 @@
 [
   {
-    "question": "What is the main topic of this document?",
-    "expected_keywords": ["..."]
+    "question": "Where is CyberDyne Systems headquartered?",
+    "expected_keywords": ["Sunnyvale", "California"]
   },
   {
-    "question": "...",
-    "expected_keywords": ["..."]
+    "question": "Who is the current CEO of the company?",
+    "expected_keywords": ["Miles Dyson", "Dyson"]
+  },
+  {
+    "question": "What is the primary purpose of the Skynet system?",
+    "expected_keywords": ["defense grid", "automated defense", "tactical"]
+  },
+  {
+    "question": "Describe the chassis of the T-800 unit.",
+    "expected_keywords": ["hyper-alloy", "combat chassis", "hyper"]
+  },
+  {
+    "question": "What is required for employees working in Sector 4?",
+    "expected_keywords": ["radiation badges", "Class-A"]
   }
 ]

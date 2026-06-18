@@ -2,8 +2,9 @@ import streamlit as st
 import requests
 import uuid
 import json
+import os
 
-BACKEND_URL = "http://localhost:8000"
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 st.set_page_config(page_title="RAG Chatbot", page_icon="💬", layout="wide")
 st.title("Chat with your documents")
